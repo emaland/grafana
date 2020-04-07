@@ -81,7 +81,8 @@ const exposeToPlugin = (modules: Module[]) => {
   script.textContent = JSON.stringify({
     imports: Object.fromEntries(modules.map(([key]) => [key, `./${key}/fake-filename-from-importmap.js`])),
   });
-  document.currentScript.after(script);
+  // Tests don't support `document.currentScript`
+  document.body.append(script);
 
   // Wait for import map
   SystemJS.prepareImport().then(() => {
